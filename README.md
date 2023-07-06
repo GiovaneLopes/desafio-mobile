@@ -11,7 +11,7 @@ The project aims to display terms in English and manage the words displayed.
 ## Installation and Usage
 To install and use the project, follow these steps:
 
--Make sure you have the Flutter SDK installed on your development environment.
+- Make sure you have the Flutter SDK installed on your development environment.
 
 - Clone this repository to your local environment.
 git clone https://github.com/GiovaneLopes/desafio-mobile.git
