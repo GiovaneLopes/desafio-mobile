@@ -4,13 +4,13 @@ import 'package:app_dictionary/features/word_details/domain/repositories/get_wor
 import 'package:dartz/dartz.dart';
 
 class GetWordDetailsRepositoryImp implements GetWordDetailsRepository {
-  final WordsApiRemoteDatasource datasource;
+  final WordsApiRemoteDatasource remoteDatasource;
 
-  GetWordDetailsRepositoryImp(this.datasource);
+  GetWordDetailsRepositoryImp(this.remoteDatasource);
   @override
   Future<Either<Exception, Word>> call(String word) async {
     try {
-      final response = await datasource(word);
+      final response = await remoteDatasource(word);
       return Right(response);
     } catch (e) {
       rethrow;

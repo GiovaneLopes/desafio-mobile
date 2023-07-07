@@ -5,8 +5,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
+import 'package:app_dictionary/features/word_details/data/datasources/word_details_local_datasource.dart'
+    as _i5;
 import 'package:app_dictionary/features/word_details/data/datasources/words_api_remote_datasource.dart'
     as _i3;
+import 'package:app_dictionary/features/word_details/data/models/word_model.dart'
+    as _i6;
 import 'package:app_dictionary/features/word_details/domain/entities/word.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -58,4 +62,20 @@ class MockWordsApiRemoteDatasource extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.Word>);
+}
+
+/// A class which mocks [WordDetailsLocalDatasource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockWordDetailsLocalDatasource extends _i1.Mock
+    implements _i5.WordDetailsLocalDatasource {
+  @override
+  _i4.Future<void> cacheWord(_i6.WordModel? word) => (super.noSuchMethod(
+        Invocation.method(
+          #cacheWord,
+          [word],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
