@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:app_dictionary/features/words_list/domain/entities/word.dart';
+import 'package:app_dictionary/features/word_details/domain/entities/word.dart';
 
 class WordModel extends Word {
   WordModel({
