@@ -38,8 +38,10 @@ class WordModel extends Word {
   factory WordModel.fromMap(Map<String, dynamic> map) {
     return WordModel(
       word: map['word'] ?? '',
-      definitions: List<String>.from(map['definitions']),
-      pronunciation: map['pronunciation'] ?? '',
+      definitions: (map['results'] as List)
+          .map((e) => e['definition'] as String)
+          .toList(),
+      pronunciation: map['pronunciation']['all'] ?? '',
       frequency: map['frequency']?.toDouble() ?? 0.0,
     );
   }
