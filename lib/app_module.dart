@@ -1,4 +1,3 @@
-import 'package:app_dictionary/features/word_details/data/datasources/word_details_local_datasource.dart';
 import 'package:app_dictionary/features/word_details/data/datasources/words_api_remote_datasource.dart';
 import 'package:app_dictionary/features/word_details/data/repositories/get_word_details_repository_imp.dart';
 import 'package:app_dictionary/features/word_details/domain/usecases/get_word_details.dart';
