@@ -11,7 +11,7 @@ class WordsRemoteDatasourceImp implements WordsRemoteDatasource {
   WordsRemoteDatasourceImp();
 
   int pageNumber = 1;
-  final pageSize = 28;
+  final pageSize = 50;
   @override
   Future<List<String>> call() async {
     try {

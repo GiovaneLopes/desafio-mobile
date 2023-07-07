@@ -29,7 +29,8 @@ class WordsApiRemoteDatasourceImp implements WordsApiRemoteDatasource {
         final word = WordModel.fromJson(data);
         return word;
       } else {
-        throw Exception();
+        return Word(
+            word: word, definitions: [], pronunciation: '', frequency: 0);
       }
     } catch (e) {
       rethrow;
