@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import 'package:app_dictionary/features/words_list/domain/entities/word.dart';
+import 'package:app_dictionary/features/word_details/domain/entities/word.dart';
 
 class WordModel extends Word {
   WordModel({
@@ -36,11 +36,40 @@ class WordModel extends Word {
   }
 
   factory WordModel.fromMap(Map<String, dynamic> map) {
+    String? pronunciation;
+    if (map['pronunciation'] is String) {
+      pronunciation = map['pronunciation'];
+    } else if (map['pronunciation'] is Map<String, dynamic>) {
+      pronunciation = map['pronunciation']['all'];
+    }
     return WordModel(
       word: map['word'] ?? '',
-      definitions: List<String>.from(map['definitions']),
+      definitions: map['results'] != null
+          ? (map['results'] as List)
+              .map((e) => e['definition'] as String)
+              .toList()
+          : <String>[],
+      pronunciation: pronunciation ?? '',
+      frequency: map['frequency']?.toDouble() ?? 0.0,
+    );
+  }
+
+  factory WordModel.fromCache(Map<String, dynamic> map) {
+    return WordModel(
+      word: map['word'] ?? '',
+      definitions:
+          (map['definitions'] as List).map((e) => e as String).toList(),
       pronunciation: map['pronunciation'] ?? '',
       frequency: map['frequency']?.toDouble() ?? 0.0,
+    );
+  }
+
+  factory WordModel.fromEntity(Word entity) {
+    return WordModel(
+      word: entity.word,
+      definitions: entity.definitions,
+      pronunciation: entity.pronunciation,
+      frequency: entity.frequency,
     );
   }
 

@@ -1,18 +1,21 @@
-import 'package:app_dictionary/core/ui/utils/string_extension.dart';
+import 'package:app_dictionary/core/utils/string_extension.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class WordCard extends StatelessWidget {
   final String word;
-  const WordCard(this.word, {super.key});
+  final Function() onPressed;
+  const WordCard(this.word, {super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () => onPressed(),
+      child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         padding: const EdgeInsets.all(8),
-        height: 78,
-        width: 78,
+        height: 88,
+        width: 88,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: Colors.grey[800],
@@ -38,7 +41,7 @@ class WordCard extends StatelessWidget {
             Expanded(
               child: AutoSizeText(
                 word.capitalize(),
-                minFontSize: 8,
+                minFontSize: 12,
                 maxLines: 1,
                 textAlign: TextAlign.start,
                 style: const TextStyle(
@@ -47,6 +50,8 @@ class WordCard extends StatelessWidget {
               ),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

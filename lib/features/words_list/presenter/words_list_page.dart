@@ -71,7 +71,14 @@ class _WordsListPageState extends State<WordsListPage> {
                   children: (state.runtimeType == WordsListSuccessState)
                       ? List.generate(
                           (state as WordsListSuccessState).words.length,
-                          (index) => WordCard((state).words[index]))
+                          (index) => WordCard(
+                            (state).words[index],
+                            onPressed: () {
+                              Modular.to.pushNamed('/word-details',
+                                  arguments: [index]);
+                            },
+                          ),
+                        )
                       : <Widget>[],
                 ),
               ],
