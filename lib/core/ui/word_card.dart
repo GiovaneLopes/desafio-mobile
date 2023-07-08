@@ -14,8 +14,8 @@ class WordCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         padding: const EdgeInsets.all(8),
-        height: 78,
-        width: 78,
+        height: 88,
+        width: 88,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: Colors.grey[800],
@@ -41,7 +41,7 @@ class WordCard extends StatelessWidget {
             Expanded(
               child: AutoSizeText(
                 word.capitalize(),
-                minFontSize: 8,
+                minFontSize: 12,
                 maxLines: 1,
                 textAlign: TextAlign.start,
                 style: const TextStyle(
