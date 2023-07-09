@@ -14,13 +14,18 @@ void main() {
   final repository = MockGetWordDetailsRepository();
   final usecase = GetWordDetailsUsecaseImp(repository);
   final Word word = Word(
-      word: "door", definitions: [], pronunciation: 'dour', frequency: 1.0);
+      word: "door",
+      definitions: [],
+      pronunciation: 'dour',
+      frequency: 1.0,
+      isFavorited: false);
   setUp(() {
     WidgetsFlutterBinding.ensureInitialized();
   });
 
   test('Should return a Word', () async {
-    when(repository('door')).thenAnswer((_) async => Right(word));
+    when(repository.getWordDetails('door'))
+        .thenAnswer((_) async => Right(word));
 
     final result = await usecase('door');
     expect(result.fold(id, id), isInstanceOf<Word>());

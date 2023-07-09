@@ -3,10 +3,13 @@ class Word {
   final List<String> definitions;
   final String pronunciation;
   final double frequency;
+  final bool isFavorited;
 
-  Word(
-      {required this.word,
-      required this.definitions,
-      required this.pronunciation,
-      required this.frequency});
+  Word({
+    required this.word,
+    required this.definitions,
+    required this.pronunciation,
+    required this.frequency,
+    required this.isFavorited,
+  });
 }

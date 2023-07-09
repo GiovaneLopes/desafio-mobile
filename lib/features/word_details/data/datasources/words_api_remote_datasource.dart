@@ -30,7 +30,11 @@ class WordsApiRemoteDatasourceImp implements WordsApiRemoteDatasource {
         return word;
       } else {
         return Word(
-            word: word, definitions: [], pronunciation: '', frequency: 0);
+            word: word,
+            definitions: [],
+            pronunciation: '',
+            frequency: 0,
+            isFavorited: false);
       }
     } catch (e) {
       rethrow;

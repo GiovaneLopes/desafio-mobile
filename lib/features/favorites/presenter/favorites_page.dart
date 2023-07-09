@@ -1,19 +1,19 @@
 import 'package:app_dictionary/core/ui/word_card.dart';
-import 'package:app_dictionary/features/history/presenter/history_cubit.dart';
+import 'package:app_dictionary/features/favorites/presenter/favorites_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HistoryListPage extends StatefulWidget {
-  const HistoryListPage({super.key});
+class FavoritesListPage extends StatefulWidget {
+  const FavoritesListPage({super.key});
 
   @override
-  State<HistoryListPage> createState() => _HistoryListPageState();
+  State<FavoritesListPage> createState() => _FavoritesListPageState();
 }
 
-class _HistoryListPageState extends State<HistoryListPage> {
-  final HistoryCubit cubit = Modular.get();
+class _FavoritesListPageState extends State<FavoritesListPage> {
+  final FavoritesCubit cubit = Modular.get();
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _HistoryListPageState extends State<HistoryListPage> {
         child: BlocBuilder(
           bloc: cubit,
           builder: (context, state) {
-            if (state.runtimeType == HistoryErrorState) {
+            if (state.runtimeType == FavoritesErrorState) {
               return Center(
                 child: IconButton(
                     onPressed: () => cubit.initialize(),
@@ -43,7 +43,7 @@ class _HistoryListPageState extends State<HistoryListPage> {
                 const Padding(
                   padding: EdgeInsets.all(12.0),
                   child: Text(
-                    'History',
+                    'Favorites',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -53,20 +53,22 @@ class _HistoryListPageState extends State<HistoryListPage> {
                 Wrap(
                   alignment: WrapAlignment.center,
                   direction: Axis.horizontal,
-                  children: (state.runtimeType == HistorySuccessState)
-                      ? (state as HistorySuccessState).historyList.isNotEmpty
+                  children: (state.runtimeType == FavoritesSuccessState)
+                      ? (state as FavoritesSuccessState)
+                              .favoritesList
+                              .isNotEmpty
                           ? List.generate(
-                              state.historyList.length,
+                              state.favoritesList.length,
                               (index) => WordCard(
-                                (state).historyList[index].word,
+                                (state).favoritesList[index].word,
                                 onPressed: () {
                                   Modular.to.pushNamed(
                                     '/word-details',
                                     arguments: [
                                       List.generate(
-                                          state.historyList.length,
+                                          state.favoritesList.length,
                                           (index) =>
-                                              state.historyList[index].word),
+                                              state.favoritesList[index].word),
                                       index
                                     ],
                                   ).then((value) => cubit.initialize());

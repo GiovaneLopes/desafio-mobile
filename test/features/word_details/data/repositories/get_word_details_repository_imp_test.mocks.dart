@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:app_dictionary/features/word_details/data/datasources/word_details_local_datasource.dart'
+import 'package:app_dictionary/core/datasources/local_words_datasource/local_words_datasource.dart'
     as _i5;
 import 'package:app_dictionary/features/word_details/data/datasources/words_api_remote_datasource.dart'
     as _i3;
@@ -64,11 +64,11 @@ class MockWordsApiRemoteDatasource extends _i1.Mock
       ) as _i4.Future<_i2.Word>);
 }
 
-/// A class which mocks [WordDetailsLocalDatasource].
+/// A class which mocks [LocalWordsDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockWordDetailsLocalDatasource extends _i1.Mock
-    implements _i5.WordDetailsLocalDatasource {
+class MockLocalWordsDatasource extends _i1.Mock
+    implements _i5.LocalWordsDatasource {
   @override
   _i4.Future<void> cacheWord(_i6.WordModel? word) => (super.noSuchMethod(
         Invocation.method(
@@ -91,6 +91,16 @@ class MockWordDetailsLocalDatasource extends _i1.Mock
   _i4.Future<List<_i6.WordModel>> getCachedWordsList() => (super.noSuchMethod(
         Invocation.method(
           #getCachedWordsList,
+          [],
+        ),
+        returnValue: _i4.Future<List<_i6.WordModel>>.value(<_i6.WordModel>[]),
+        returnValueForMissingStub:
+            _i4.Future<List<_i6.WordModel>>.value(<_i6.WordModel>[]),
+      ) as _i4.Future<List<_i6.WordModel>>);
+  @override
+  _i4.Future<List<_i6.WordModel>> getFavoritesList() => (super.noSuchMethod(
+        Invocation.method(
+          #getFavoritesList,
           [],
         ),
         returnValue: _i4.Future<List<_i6.WordModel>>.value(<_i6.WordModel>[]),

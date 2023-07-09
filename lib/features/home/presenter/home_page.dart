@@ -1,3 +1,4 @@
+import 'package:app_dictionary/features/favorites/presenter/favorites_page.dart';
 import 'package:app_dictionary/features/history/presenter/history_page.dart';
 import 'package:app_dictionary/features/words_list/presenter/words_list_page.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> contents = [
     const WordsListPage(),
     const HistoryListPage(),
+    const FavoritesListPage(),
   ];
   int currentItem = 0;
   @override
@@ -33,6 +35,11 @@ class _HomePageState extends State<HomePage> {
           SalomonBottomBarItem(
             icon: const Icon(Icons.history),
             title: const Text("History"),
+            selectedColor: Colors.teal[300],
+          ),
+          SalomonBottomBarItem(
+            icon: const Icon(Icons.favorite_border_outlined),
+            title: const Text("Favorites"),
             selectedColor: Colors.teal[300],
           ),
         ],
