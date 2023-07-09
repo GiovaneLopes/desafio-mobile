@@ -10,7 +10,11 @@ void main() {
   final datasource = MockWordsApiRemoteDatasource();
   String wordText = 'door';
   final WordModel wordModel = WordModel(
-      word: wordText, definitions: [], pronunciation: '', frequency: 1.0);
+      word: 'word',
+      definitions: [],
+      pronunciation: '',
+      frequency: 1.0,
+      isFavorited: false);
   setUp(() async {
     WidgetsFlutterBinding.ensureInitialized();
     await dotenv.load(fileName: ".env");
@@ -21,5 +25,4 @@ void main() {
     final result = await datasource(wordText);
     expect(result, isInstanceOf<WordModel>());
   });
-  
 }

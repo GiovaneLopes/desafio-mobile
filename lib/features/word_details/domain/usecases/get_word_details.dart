@@ -12,6 +12,6 @@ class GetWordDetailsUsecaseImp implements GetWordDetailsUsecase {
   GetWordDetailsUsecaseImp(this.repository);
   @override
   Future<Either<Exception, Word>> call(String word) async {
-    return await repository(word);
+    return await repository.getWordDetails(word);
   }
 }

@@ -39,17 +39,17 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 class MockGetWordDetailsRepository extends _i1.Mock
     implements _i3.GetWordDetailsRepository {
   @override
-  _i4.Future<_i2.Either<Exception, _i5.Word>> call(String? word) =>
+  _i4.Future<_i2.Either<Exception, _i5.Word>> getWordDetails(String? word) =>
       (super.noSuchMethod(
         Invocation.method(
-          #call,
+          #getWordDetails,
           [word],
         ),
         returnValue: _i4.Future<_i2.Either<Exception, _i5.Word>>.value(
             _FakeEither_0<Exception, _i5.Word>(
           this,
           Invocation.method(
-            #call,
+            #getWordDetails,
             [word],
           ),
         )),
@@ -58,9 +58,34 @@ class MockGetWordDetailsRepository extends _i1.Mock
                 _FakeEither_0<Exception, _i5.Word>(
           this,
           Invocation.method(
-            #call,
+            #getWordDetails,
             [word],
           ),
         )),
       ) as _i4.Future<_i2.Either<Exception, _i5.Word>>);
+  @override
+  _i4.Future<_i2.Either<Exception, void>> setFavoriteWord(_i5.Word? word) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setFavoriteWord,
+          [word],
+        ),
+        returnValue: _i4.Future<_i2.Either<Exception, void>>.value(
+            _FakeEither_0<Exception, void>(
+          this,
+          Invocation.method(
+            #setFavoriteWord,
+            [word],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<Exception, void>>.value(
+                _FakeEither_0<Exception, void>(
+          this,
+          Invocation.method(
+            #setFavoriteWord,
+            [word],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<Exception, void>>);
 }

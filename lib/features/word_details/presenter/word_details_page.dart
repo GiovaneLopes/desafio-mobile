@@ -31,75 +31,81 @@ class _WordDetailsPageState extends State<WordDetailsPage> {
     return Scaffold(
       body: Stack(
         children: [
-          SafeArea(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: () => Modular.to.pop(),
-                      icon: const Icon(
-                        Icons.arrow_back,
+          BlocBuilder(
+            bloc: cubit,
+            builder: (context, state) {
+              if (state.runtimeType == WordDetailsLoadingState) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        color: Colors.teal[300],
                       ),
+                    ],
+                  ),
+                );
+              }
+              if (state.runtimeType == WordDetailsErrorState) {
+                return Container(
+                  width: double.infinity,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[800],
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(16),
                     ),
-                    const Text(
-                      'Word Details',
-                      style: TextStyle(fontSize: 22),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.transparent,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.words[current].capitalize(),
+                        style: const TextStyle(fontSize: 22),
                       ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(
-                        top: 22, left: 22, right: 22, bottom: 50),
-                    child: SingleChildScrollView(
-                      child: BlocBuilder(
-                        bloc: cubit,
-                        builder: (context, state) {
-                          if (state.runtimeType == WordDetailsLoadingState) {
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CircularProgressIndicator(
-                                    color: Colors.teal[300],
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                          if (state.runtimeType == WordDetailsErrorState) {
-                            return Container(
-                              width: double.infinity,
-                              height: 160,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[800],
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(16),
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    widget.words[current].capitalize(),
-                                    style: const TextStyle(fontSize: 22),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
+                    ],
+                  ),
+                );
+              }
 
-                          final success = state as WordDetailsSuccessState;
-                          return Column(
+              final success = state as WordDetailsSuccessState;
+              return SafeArea(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () => Modular.to.pop(),
+                          icon: const Icon(
+                            Icons.arrow_back,
+                          ),
+                        ),
+                        const Text(
+                          'Word Details',
+                          style: TextStyle(fontSize: 22),
+                        ),
+                        IconButton(
+                          onPressed: () => !success.word.isFavorited
+                              ? cubit.setFavorite(success.word)
+                              : cubit.removeFavorite(success.word),
+                          icon: Icon(
+                            success.word.isFavorited
+                                ? Icons.favorite
+                                : Icons.favorite_border_outlined,
+                            color: success.word.isFavorited
+                                ? Colors.red
+                                : Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            top: 22, left: 22, right: 22, bottom: 50),
+                        child: SingleChildScrollView(
+                          child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Container(
@@ -214,14 +220,14 @@ class _WordDetailsPageState extends State<WordDetailsPage> {
                                   ],
                                 ),
                             ],
-                          );
-                        },
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
           Positioned.fill(
             bottom: 0,

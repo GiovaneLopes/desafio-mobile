@@ -1,5 +1,5 @@
-import 'package:app_dictionary/features/favorites/domain/repositories/favorites_repository.dart';
 import 'package:app_dictionary/features/word_details/domain/entities/word.dart';
+import 'package:app_dictionary/features/word_details/domain/repositories/get_word_details_repository.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class SetFavoriteWord {
@@ -7,7 +7,7 @@ abstract class SetFavoriteWord {
 }
 
 class SetFavoriteWordImp implements SetFavoriteWord {
-  final FavoritesRepository repository;
+  final GetWordDetailsRepository repository;
 
   SetFavoriteWordImp(this.repository);
 

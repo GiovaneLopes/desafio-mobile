@@ -4,5 +4,4 @@ class WordsApiConstants {
   static const String headerHost = 'X-RapidAPI-Host';
   static const String headerHostContent = 'wordsapiv1.p.rapidapi.com';
   static const String envApiKey = 'WORDS_API_KEY';
-  static const String localWordsList = 'words-list';
 }
