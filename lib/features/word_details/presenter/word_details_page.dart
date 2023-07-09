@@ -6,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class WordDetailsPage extends StatefulWidget {
+  final List<String> words;
   final int index;
-  const WordDetailsPage(this.index, {super.key});
+  const WordDetailsPage(this.words, this.index, {super.key});
 
   @override
   State<WordDetailsPage> createState() => _WordDetailsPageState();
@@ -16,92 +17,67 @@ class WordDetailsPage extends StatefulWidget {
 class _WordDetailsPageState extends State<WordDetailsPage> {
   final WordDetailsCubit cubit = Modular.get();
   final WordsListCubit listCubit = Modular.get();
-  late int current;
+  int current = 0;
 
   @override
   void initState() {
     super.initState();
     current = widget.index;
-    cubit.initialize(listCubit.cachedWords[current]);
+    cubit.initialize(widget.words[current]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () => Modular.to.pop(),
-              icon: const Icon(
-                Icons.arrow_back,
-              ),
-            ),
-            const Text('Word Details'),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.transparent,
-              ),
-            ),
-          ],
-        ),
-      ),
       body: Stack(
         children: [
-          Column(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(top: 22, left: 22, right: 22),
-                  child: SingleChildScrollView(
-                    child: BlocBuilder(
-                      bloc: cubit,
-                      builder: (context, state) {
-                        if (state.runtimeType == WordDetailsLoadingState) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircularProgressIndicator(
-                                  color: Colors.teal[300],
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                        if (state.runtimeType == WordDetailsErrorState) {
-                          return Container(
-                            width: double.infinity,
-                            height: 160,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[800],
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(16),
+          SafeArea(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () => Modular.to.pop(),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                      ),
+                    ),
+                    const Text(
+                      'Word Details',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 22, left: 22, right: 22, bottom: 50),
+                    child: SingleChildScrollView(
+                      child: BlocBuilder(
+                        bloc: cubit,
+                        builder: (context, state) {
+                          if (state.runtimeType == WordDetailsLoadingState) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircularProgressIndicator(
+                                    color: Colors.teal[300],
+                                  ),
+                                ],
                               ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  listCubit.cachedWords[current].capitalize(),
-                                  style: const TextStyle(fontSize: 22),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-
-                        final success = state as WordDetailsSuccessState;
-                        return Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
+                            );
+                          }
+                          if (state.runtimeType == WordDetailsErrorState) {
+                            return Container(
                               width: double.infinity,
                               height: 160,
                               decoration: BoxDecoration(
@@ -114,109 +90,138 @@ class _WordDetailsPageState extends State<WordDetailsPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    success.word.word.capitalize(),
+                                    widget.words[current].capitalize(),
                                     style: const TextStyle(fontSize: 22),
                                   ),
-                                  if (success.word.pronunciation.isNotEmpty)
-                                    Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 22,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            const Text(
-                                              'Pronounce:',
-                                              style: TextStyle(fontSize: 11),
-                                            ),
-                                            Text(
-                                              success.word.pronunciation
-                                                  .capitalize(),
-                                              style:
-                                                  const TextStyle(fontSize: 22),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
                                 ],
                               ),
-                            ),
-                            const SizedBox(
-                              height: 22,
-                            ),
-                            if (success.word.definitions.isNotEmpty)
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Meanings',
-                                    style: TextStyle(fontSize: 22),
+                            );
+                          }
+
+                          final success = state as WordDetailsSuccessState;
+                          return Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                height: 160,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.surface,
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(16),
                                   ),
-                                  const SizedBox(
-                                    height: 22,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: List.generate(
-                                      success.word.definitions.length,
-                                      (index) => Column(
+                                  border: Border.all(),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      success.word.word.capitalize(),
+                                      style: const TextStyle(fontSize: 22),
+                                    ),
+                                    if (success.word.pronunciation.isNotEmpty)
+                                      Column(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 8.0),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                      right: 8),
-                                                  height: 8,
-                                                  width: 8,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Colors.teal[300],
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    success
-                                                        .word.definitions[index]
-                                                        .capitalize(),
-                                                    textAlign: TextAlign.start,
-                                                    style: const TextStyle(
-                                                        fontSize: 16),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                          const SizedBox(
+                                            height: 22,
                                           ),
-                                          const Divider(
-                                            color: Colors.white,
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              const Text(
+                                                'Pronounce:',
+                                                style: TextStyle(fontSize: 11),
+                                              ),
+                                              Text(
+                                                success.word.pronunciation
+                                                    .capitalize(),
+                                                style: const TextStyle(
+                                                    fontSize: 22),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                          ],
-                        );
-                      },
+                              const SizedBox(
+                                height: 22,
+                              ),
+                              if (success.word.definitions.isNotEmpty)
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Meanings',
+                                      style: TextStyle(fontSize: 22),
+                                    ),
+                                    const SizedBox(
+                                      height: 22,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: List.generate(
+                                        success.word.definitions.length,
+                                        (index) => Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 8.0),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            right: 8),
+                                                    height: 8,
+                                                    width: 8,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Colors.teal[300],
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Text(
+                                                      success.word
+                                                          .definitions[index]
+                                                          .capitalize(),
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style: const TextStyle(
+                                                          fontSize: 16),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const Divider(
+                                              color: Colors.white,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Positioned.fill(
             bottom: 0,
@@ -240,9 +245,9 @@ class _WordDetailsPageState extends State<WordDetailsPage> {
                         setState(() {
                           if (current > 0) {
                             current = current - 1;
-                            cubit.initialize(listCubit.cachedWords[current]);
+                            cubit.initialize(widget.words[current]);
                           } else {
-                            current = listCubit.cachedWords.length - 1;
+                            current = widget.words.length - 1;
                           }
                         });
                       },
@@ -262,9 +267,9 @@ class _WordDetailsPageState extends State<WordDetailsPage> {
                       ),
                       onPressed: () {
                         setState(() {
-                          if (current < listCubit.cachedWords.length - 1) {
+                          if (current < widget.words.length - 1) {
                             current = current + 1;
-                            cubit.initialize(listCubit.cachedWords[current]);
+                            cubit.initialize(widget.words[current]);
                           } else {
                             current = 0;
                           }

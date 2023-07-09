@@ -1,3 +1,7 @@
+import 'package:app_dictionary/features/history/data/repository/history_repository_imp.dart';
+import 'package:app_dictionary/features/history/domain/usecases/get_history_list.dart';
+import 'package:app_dictionary/features/history/presenter/history_cubit.dart';
+import 'package:app_dictionary/features/home/presenter/home_page.dart';
 import 'package:app_dictionary/features/word_details/data/datasources/word_details_local_datasource.dart';
 import 'package:app_dictionary/features/word_details/data/datasources/words_api_remote_datasource.dart';
 import 'package:app_dictionary/features/word_details/data/repositories/get_word_details_repository_imp.dart';
@@ -8,7 +12,6 @@ import 'package:app_dictionary/features/words_list/data/datasources/words_remote
 import 'package:app_dictionary/features/words_list/data/repositories/get_words_list_repository_imp.dart';
 import 'package:app_dictionary/features/words_list/domain/usecases/get_words_list.dart';
 import 'package:app_dictionary/features/words_list/presenter/words_list_cubit.dart';
-import 'package:app_dictionary/features/words_list/presenter/words_list_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AppModule extends Module {
@@ -25,11 +28,16 @@ class AppModule extends Module {
         Bind.lazySingleton((i) => WordsApiRemoteDatasourceImp()),
         Bind.lazySingleton((i) => WordDetailsLocalDatasourceImp()),
         Bind.lazySingleton((i) => WordDetailsCubit(i())),
+        // History
+        Bind.lazySingleton((i) => GetHistoryListUsecaseImp(i())),
+        Bind.lazySingleton((i) => HistoryRepositoryImp(i())),
+        Bind.lazySingleton((i) => HistoryCubit(i())),
       ];
   @override
   List<ModularRoute> get routes => [
-        ChildRoute('/', child: (context, args) => const WordsListPage()),
+        ChildRoute('/', child: (context, args) => const HomePage()),
         ChildRoute('/word-details',
-            child: (context, args) => WordDetailsPage(args.data.first)),
+            child: (context, args) =>
+                WordDetailsPage(args.data[0], args.data[1])),
       ];
 }

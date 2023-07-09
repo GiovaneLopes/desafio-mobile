@@ -37,8 +37,8 @@ class _WordsListPageState extends State<WordsListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(
+    return Expanded(
+      child: SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: BlocBuilder(
@@ -75,7 +75,7 @@ class _WordsListPageState extends State<WordsListPage> {
                             (state).words[index],
                             onPressed: () {
                               Modular.to.pushNamed('/word-details',
-                                  arguments: [index]);
+                                  arguments: [state.words, index]);
                             },
                           ),
                         )
