@@ -14,7 +14,11 @@ void main() {
   final usecase = GetHistoryListUsecaseImp(repository);
   final List<WordModel> word = [
     WordModel(
-        word: "door", definitions: [], pronunciation: 'dour', frequency: 1.0)
+        word: 'word',
+        definitions: [],
+        pronunciation: '',
+        frequency: 1.0,
+        isFavorited: false)
   ];
 
   test('Should return a List<WordModel>', () async {

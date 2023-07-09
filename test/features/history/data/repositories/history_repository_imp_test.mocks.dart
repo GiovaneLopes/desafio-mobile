@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:app_dictionary/features/word_details/data/datasources/word_details_local_datasource.dart'
+import 'package:app_dictionary/core/datasources/local_words_datasource/local_words_datasource.dart'
     as _i2;
 import 'package:app_dictionary/features/word_details/data/models/word_model.dart'
     as _i4;
@@ -22,11 +22,11 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [WordDetailsLocalDatasource].
+/// A class which mocks [LocalWordsDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockWordDetailsLocalDatasource extends _i1.Mock
-    implements _i2.WordDetailsLocalDatasource {
+class MockLocalWordsDatasource extends _i1.Mock
+    implements _i2.LocalWordsDatasource {
   @override
   _i3.Future<void> cacheWord(_i4.WordModel? word) => (super.noSuchMethod(
         Invocation.method(
@@ -49,6 +49,16 @@ class MockWordDetailsLocalDatasource extends _i1.Mock
   _i3.Future<List<_i4.WordModel>> getCachedWordsList() => (super.noSuchMethod(
         Invocation.method(
           #getCachedWordsList,
+          [],
+        ),
+        returnValue: _i3.Future<List<_i4.WordModel>>.value(<_i4.WordModel>[]),
+        returnValueForMissingStub:
+            _i3.Future<List<_i4.WordModel>>.value(<_i4.WordModel>[]),
+      ) as _i3.Future<List<_i4.WordModel>>);
+  @override
+  _i3.Future<List<_i4.WordModel>> getFavoritesList() => (super.noSuchMethod(
+        Invocation.method(
+          #getFavoritesList,
           [],
         ),
         returnValue: _i3.Future<List<_i4.WordModel>>.value(<_i4.WordModel>[]),

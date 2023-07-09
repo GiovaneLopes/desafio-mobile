@@ -2,13 +2,17 @@ import 'package:app_dictionary/features/word_details/data/models/word_model.dart
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../repositories/get_word_details_repository_imp_test.mocks.dart';
+import '../../features/word_details/data/repositories/get_word_details_repository_imp_test.mocks.dart';
 
 void main() {
-  final datasource = MockWordDetailsLocalDatasource();
+  final datasource = MockLocalWordsDatasource();
   String wordText = 'door';
   final WordModel wordModel = WordModel(
-      word: wordText, definitions: [], pronunciation: '', frequency: 1.0);
+      word: wordText,
+      definitions: [],
+      pronunciation: '',
+      frequency: 1.0,
+      isFavorited: false);
 
   test('Should return a WordModel', () async {
     when(datasource.getCachedWord(wordText))

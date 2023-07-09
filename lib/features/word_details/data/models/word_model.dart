@@ -10,6 +10,7 @@ class WordModel extends Word {
     required super.definitions,
     required super.pronunciation,
     required super.frequency,
+    required super.isFavorited,
   });
 
   WordModel copyWith({
@@ -17,13 +18,14 @@ class WordModel extends Word {
     List<String>? definitions,
     String? pronunciation,
     double? frequency,
+    bool? isFavorited,
   }) {
     return WordModel(
-      word: word ?? this.word,
-      definitions: definitions ?? this.definitions,
-      pronunciation: pronunciation ?? this.pronunciation,
-      frequency: frequency ?? this.frequency,
-    );
+        word: word ?? this.word,
+        definitions: definitions ?? this.definitions,
+        pronunciation: pronunciation ?? this.pronunciation,
+        frequency: frequency ?? this.frequency,
+        isFavorited: isFavorited ?? this.isFavorited);
   }
 
   Map<String, dynamic> toMap() {
@@ -32,6 +34,7 @@ class WordModel extends Word {
       'definitions': definitions,
       'pronunciation': pronunciation,
       'frequency': frequency,
+      'isFavorited': isFavorited,
     };
   }
 
@@ -51,6 +54,7 @@ class WordModel extends Word {
           : <String>[],
       pronunciation: pronunciation ?? '',
       frequency: map['frequency']?.toDouble() ?? 0.0,
+      isFavorited: map['isFavorited'] ?? false,
     );
   }
 
@@ -61,6 +65,7 @@ class WordModel extends Word {
           (map['definitions'] as List).map((e) => e as String).toList(),
       pronunciation: map['pronunciation'] ?? '',
       frequency: map['frequency']?.toDouble() ?? 0.0,
+      isFavorited: map['isFavorited'] ?? false,
     );
   }
 
@@ -70,6 +75,7 @@ class WordModel extends Word {
       definitions: entity.definitions,
       pronunciation: entity.pronunciation,
       frequency: entity.frequency,
+      isFavorited: entity.isFavorited,
     );
   }
 
@@ -80,7 +86,7 @@ class WordModel extends Word {
 
   @override
   String toString() {
-    return 'WordModel(word: $word, definitions: $definitions, pronunciation: $pronunciation, frequency: $frequency)';
+    return 'WordModel(word: $word, definitions: $definitions, pronunciation: $pronunciation, frequency: $frequency, isFavorited: $isFavorited)';
   }
 
   @override
@@ -91,7 +97,8 @@ class WordModel extends Word {
         other.word == word &&
         listEquals(other.definitions, definitions) &&
         other.pronunciation == pronunciation &&
-        other.frequency == frequency;
+        other.frequency == frequency &&
+        other.isFavorited == isFavorited;
   }
 
   @override
@@ -99,6 +106,7 @@ class WordModel extends Word {
     return word.hashCode ^
         definitions.hashCode ^
         pronunciation.hashCode ^
-        frequency.hashCode;
+        frequency.hashCode ^
+        isFavorited.hashCode;
   }
 }

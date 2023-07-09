@@ -1,10 +1,10 @@
+import 'package:app_dictionary/core/datasources/local_words_datasource/local_words_datasource.dart';
 import 'package:app_dictionary/features/history/domain/repositories/history_repository.dart';
-import 'package:app_dictionary/features/word_details/data/datasources/word_details_local_datasource.dart';
 import 'package:app_dictionary/features/word_details/domain/entities/word.dart';
 import 'package:dartz/dartz.dart';
 
 class HistoryRepositoryImp implements HistoryRepository {
-  final WordDetailsLocalDatasource localDatasource;
+  final LocalWordsDatasource localDatasource;
 
   HistoryRepositoryImp(this.localDatasource);
 
