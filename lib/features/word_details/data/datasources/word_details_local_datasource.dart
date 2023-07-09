@@ -67,17 +67,18 @@ class WordDetailsLocalDatasourceImp implements WordDetailsLocalDatasource {
   Future<List<WordModel>> getCachedWordsList() async {
     final SharedPreferences prefs = await _preferences;
     final String? jsonList = prefs.getString(WordsApiConstants.localWordsList);
-
-    if (jsonList != null) {}
-    final map = jsonDecode(jsonList!);
     List<WordModel> words = [];
-    map.map((wordItem) {
-      if (wordItem is String) {
-        words.add(WordModel.fromCache(jsonDecode(wordItem)));
-      } else if (wordItem is Map<String, dynamic>) {
-        words.add(WordModel.fromCache(wordItem));
-      }
-    }).toList();
+
+    if (jsonList != null) {
+      final map = jsonDecode(jsonList);
+      map.map((wordItem) {
+        if (wordItem is String) {
+          words.add(WordModel.fromCache(jsonDecode(wordItem)));
+        } else if (wordItem is Map<String, dynamic>) {
+          words.add(WordModel.fromCache(wordItem));
+        }
+      }).toList();
+    }
     return words;
   }
 }

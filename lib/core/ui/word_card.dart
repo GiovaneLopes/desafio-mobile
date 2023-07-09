@@ -18,10 +18,10 @@ class WordCard extends StatelessWidget {
         width: 88,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.grey[800],
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: const BorderRadius.all(
             Radius.circular(16),
-          ),
+          ),border: Border.all()
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
