@@ -87,4 +87,14 @@ class MockWordDetailsLocalDatasource extends _i1.Mock
         returnValue: _i4.Future<_i6.WordModel?>.value(),
         returnValueForMissingStub: _i4.Future<_i6.WordModel?>.value(),
       ) as _i4.Future<_i6.WordModel?>);
+  @override
+  _i4.Future<List<_i6.WordModel>> getCachedWordsList() => (super.noSuchMethod(
+        Invocation.method(
+          #getCachedWordsList,
+          [],
+        ),
+        returnValue: _i4.Future<List<_i6.WordModel>>.value(<_i6.WordModel>[]),
+        returnValueForMissingStub:
+            _i4.Future<List<_i6.WordModel>>.value(<_i6.WordModel>[]),
+      ) as _i4.Future<List<_i6.WordModel>>);
 }
