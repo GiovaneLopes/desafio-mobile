@@ -10,22 +10,28 @@ abstract class WordsRemoteDatasource {
 class WordsRemoteDatasourceImp implements WordsRemoteDatasource {
   WordsRemoteDatasourceImp();
 
+  List<String> words = [];
   int pageNumber = 1;
   final pageSize = 50;
   @override
   Future<List<String>> call() async {
     try {
-      String data =
-          await rootBundle.loadString(WordsListDataConstants.wordsDictionary);
-      final json = jsonDecode(data);
-      List<String> wordsTemp = <String>[];
-      (json as Map<String, dynamic>).forEach((key, value) {
-        wordsTemp.add(key);
-      });
       final start = (pageNumber - 1) * pageSize;
       final end = start + pageSize;
       pageNumber = pageNumber + 1;
-      return wordsTemp.sublist(start, end).cast<String>();
+      if (words.isEmpty) {
+        String data =
+            await rootBundle.loadString(WordsListDataConstants.wordsDictionary);
+        final json = jsonDecode(data);
+        List<String> wordsTemp = <String>[];
+        (json as Map<String, dynamic>).forEach((key, value) {
+          wordsTemp.add(key);
+        });
+        words = wordsTemp;
+        return wordsTemp.sublist(start, end).cast<String>();
+      } else {
+        return words.sublist(start, end).cast<String>();
+      }
     } catch (e) {
       rethrow;
     }

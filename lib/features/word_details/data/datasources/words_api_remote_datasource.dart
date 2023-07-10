@@ -18,7 +18,7 @@ class WordsApiRemoteDatasourceImp implements WordsApiRemoteDatasource {
         WordsApiConstants.headerHost: WordsApiConstants.headerHostContent,
       };
 
-      final options = http.Request('GET', Uri.parse(url));
+      final options = http.Request(WordsApiConstants.get, Uri.parse(url));
       options.headers.addAll(headers);
 
       final response = await http.Client().send(options);

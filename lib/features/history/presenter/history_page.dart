@@ -50,41 +50,43 @@ class _HistoryListPageState extends State<HistoryListPage> {
                     ),
                   ),
                 ),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  direction: Axis.horizontal,
-                  children: (state.runtimeType == HistorySuccessState)
-                      ? (state as HistorySuccessState).historyList.isNotEmpty
-                          ? List.generate(
-                              state.historyList.length,
-                              (index) => WordCard(
-                                (state).historyList[index].word,
-                                onPressed: () {
-                                  Modular.to.pushNamed(
-                                    '/word-details',
-                                    arguments: [
-                                      List.generate(
-                                          state.historyList.length,
-                                          (index) =>
-                                              state.historyList[index].word),
-                                      index
-                                    ],
-                                  ).then((value) => cubit.initialize());
-                                },
-                              ),
-                            )
-                          : <Widget>[
-                              Column(
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/images/no_data.svg',
-                                    width: 120,
-                                  ),
-                                  const Text('Sem dados'),
-                                ],
+                Center(
+                  child: Wrap(
+                    alignment: WrapAlignment.start,
+                    direction: Axis.horizontal,
+                    children: (state.runtimeType == HistorySuccessState)
+                        ? (state as HistorySuccessState).historyList.isNotEmpty
+                            ? List.generate(
+                                state.historyList.length,
+                                (index) => WordCard(
+                                  (state).historyList[index].word,
+                                  onPressed: () {
+                                    Modular.to.pushNamed(
+                                      '/word-details',
+                                      arguments: [
+                                        List.generate(
+                                            state.historyList.length,
+                                            (index) =>
+                                                state.historyList[index].word),
+                                        index
+                                      ],
+                                    ).then((value) => cubit.initialize());
+                                  },
+                                ),
                               )
-                            ]
-                      : <Widget>[],
+                            : <Widget>[
+                                Column(
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/no_data.svg',
+                                      width: 120,
+                                    ),
+                                    const Text('Sem dados'),
+                                  ],
+                                )
+                              ]
+                        : <Widget>[],
+                  ),
                 ),
               ],
             );

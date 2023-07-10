@@ -12,17 +12,17 @@ class WordCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => onPressed(),
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+        margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
         padding: const EdgeInsets.all(8),
-        height: 88,
-        width: 88,
+        height: 98,
+        width: 98,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(16),
-          ),border: Border.all()
-        ),
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(16),
+            ),
+            border: Border.all()),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -41,12 +41,11 @@ class WordCard extends StatelessWidget {
             Expanded(
               child: AutoSizeText(
                 word.capitalize(),
-                minFontSize: 12,
                 maxLines: 1,
+                minFontSize: 8,
                 textAlign: TextAlign.start,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                ),
+                style:
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
               ),
             ),
           ],

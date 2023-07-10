@@ -3,6 +3,7 @@ import 'package:app_dictionary/features/word_details/domain/usecases/get_word_de
 import 'package:app_dictionary/features/word_details/domain/usecases/remove_favorite.dart';
 import 'package:app_dictionary/features/word_details/domain/usecases/set_favorite_word.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class WordDetailsCubit extends Cubit<WordDetailsState> {
   final GetWordDetailsUsecase getWordDetailsUsecase;
@@ -11,6 +12,8 @@ class WordDetailsCubit extends Cubit<WordDetailsState> {
   WordDetailsCubit(this.getWordDetailsUsecase, this.setFavoriteWord,
       this.removeFavoriteUsecase)
       : super(WordDetailsLoadingState());
+
+  FlutterTts flutterTts = FlutterTts();
 
   Future<void> initialize(String word) async {
     emit(WordDetailsLoadingState());
@@ -27,6 +30,13 @@ class WordDetailsCubit extends Cubit<WordDetailsState> {
   void removeFavorite(Word word) async {
     await removeFavoriteUsecase(word);
     await initialize(word.word);
+  }
+
+  void playTextToSpeech(String text, double speed) async {
+    await flutterTts.setLanguage('en-US');
+    await flutterTts.setSpeechRate(speed);
+    await flutterTts.setVolume(1.0);
+    await flutterTts.speak(text);
   }
 }
 

@@ -65,21 +65,22 @@ class _WordsListPageState extends State<WordsListPage> {
                     ),
                   ),
                 ),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  direction: Axis.horizontal,
-                  children: (state.runtimeType == WordsListSuccessState)
-                      ? List.generate(
-                          (state as WordsListSuccessState).words.length,
-                          (index) => WordCard(
-                            (state).words[index],
-                            onPressed: () {
-                              Modular.to.pushNamed('/word-details',
-                                  arguments: [state.words, index]);
-                            },
-                          ),
-                        )
-                      : <Widget>[],
+                Center(
+                  child: Wrap(
+                    direction: Axis.horizontal,
+                    children: (state.runtimeType == WordsListSuccessState)
+                        ? List.generate(
+                            (state as WordsListSuccessState).words.length,
+                            (index) => WordCard(
+                              (state).words[index],
+                              onPressed: () {
+                                Modular.to.pushNamed('/word-details',
+                                    arguments: [state.words, index]);
+                              },
+                            ),
+                          )
+                        : <Widget>[],
+                  ),
                 ),
               ],
             );
