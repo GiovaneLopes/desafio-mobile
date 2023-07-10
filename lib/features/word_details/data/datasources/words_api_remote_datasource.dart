@@ -30,6 +30,7 @@ class WordsApiRemoteDatasourceImp implements WordsApiRemoteDatasource {
         return word;
       } else {
         return Word(
+            id: null,
             word: word,
             definitions: [],
             pronunciation: '',

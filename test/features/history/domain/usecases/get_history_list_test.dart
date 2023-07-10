@@ -14,6 +14,7 @@ void main() {
   final usecase = GetHistoryListUsecaseImp(repository);
   final List<WordModel> word = [
     WordModel(
+        id: null,
         word: 'word',
         definitions: [],
         pronunciation: '',

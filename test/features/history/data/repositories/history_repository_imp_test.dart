@@ -13,7 +13,8 @@ void main() {
   final datasource = MockLocalWordsDatasource();
   final repository = HistoryRepositoryImp(datasource);
   final List<WordModel> word = [
-      WordModel(
+    WordModel(
+        id: null,
         word: 'word',
         definitions: [],
         pronunciation: '',

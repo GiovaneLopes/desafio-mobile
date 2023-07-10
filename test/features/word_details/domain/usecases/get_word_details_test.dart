@@ -14,6 +14,7 @@ void main() {
   final repository = MockGetWordDetailsRepository();
   final usecase = GetWordDetailsUsecaseImp(repository);
   final Word word = Word(
+      id: null,
       word: "door",
       definitions: [],
       pronunciation: 'dour',

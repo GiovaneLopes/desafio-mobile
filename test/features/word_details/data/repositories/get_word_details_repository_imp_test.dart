@@ -22,6 +22,7 @@ void main() {
       GetWordDetailsRepositoryImp(remoteDatasource, localDatasource);
   String wordText = 'door';
   final Word word = Word(
+      id: null,
       word: wordText,
       definitions: [],
       pronunciation: '',

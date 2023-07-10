@@ -1,4 +1,5 @@
 class Word {
+  final String? id;
   final String word;
   final List<String> definitions;
   final String pronunciation;
@@ -6,6 +7,7 @@ class Word {
   final bool isFavorited;
 
   Word({
+    this.id,
     required this.word,
     required this.definitions,
     required this.pronunciation,

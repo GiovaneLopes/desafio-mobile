@@ -6,6 +6,7 @@ import 'package:app_dictionary/features/word_details/domain/entities/word.dart';
 
 class WordModel extends Word {
   WordModel({
+    super.id,
     required super.word,
     required super.definitions,
     required super.pronunciation,
@@ -14,6 +15,7 @@ class WordModel extends Word {
   });
 
   WordModel copyWith({
+    String? id,
     String? word,
     List<String>? definitions,
     String? pronunciation,
@@ -21,6 +23,7 @@ class WordModel extends Word {
     bool? isFavorited,
   }) {
     return WordModel(
+        id: id ?? this.id,
         word: word ?? this.word,
         definitions: definitions ?? this.definitions,
         pronunciation: pronunciation ?? this.pronunciation,
@@ -46,6 +49,7 @@ class WordModel extends Word {
       pronunciation = map['pronunciation']['all'];
     }
     return WordModel(
+      id: map['id'],
       word: map['word'] ?? '',
       definitions: map['results'] != null
           ? (map['results'] as List)
@@ -60,9 +64,13 @@ class WordModel extends Word {
 
   factory WordModel.fromCache(Map<String, dynamic> map) {
     return WordModel(
+      id: map['id'] ?? '',
       word: map['word'] ?? '',
-      definitions:
-          (map['definitions'] as List).map((e) => e as String).toList(),
+      definitions: map['definitions'] != null
+          ? List<String>.from(
+              map['definitions']?.map((x) => x as String),
+            )
+          : <String>[],
       pronunciation: map['pronunciation'] ?? '',
       frequency: map['frequency']?.toDouble() ?? 0.0,
       isFavorited: map['isFavorited'] ?? false,
@@ -71,6 +79,7 @@ class WordModel extends Word {
 
   factory WordModel.fromEntity(Word entity) {
     return WordModel(
+      id: entity.id,
       word: entity.word,
       definitions: entity.definitions,
       pronunciation: entity.pronunciation,
