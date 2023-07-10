@@ -1,4 +1,7 @@
 import 'package:app_dictionary/core/utils/string_extension.dart';
+import 'package:app_dictionary/features/word_details/presenter/widgets/word_detail_card.dart';
+import 'package:app_dictionary/features/word_details/presenter/widgets/word_listen.dart';
+import 'package:app_dictionary/features/word_details/presenter/widgets/word_meanings.dart';
 import 'package:app_dictionary/features/word_details/presenter/word_details_cubit.dart';
 import 'package:app_dictionary/features/words_list/presenter/words_list_cubit.dart';
 import 'package:flutter/material.dart';
@@ -108,117 +111,13 @@ class _WordDetailsPageState extends State<WordDetailsPage> {
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Container(
-                                width: double.infinity,
-                                height: 160,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.surface,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(16),
-                                  ),
-                                  border: Border.all(),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      success.word.word.capitalize(),
-                                      style: const TextStyle(fontSize: 22),
-                                    ),
-                                    if (success.word.pronunciation.isNotEmpty)
-                                      Column(
-                                        children: [
-                                          const SizedBox(
-                                            height: 22,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              const Text(
-                                                'Pronounce:',
-                                                style: TextStyle(fontSize: 11),
-                                              ),
-                                              Text(
-                                                success.word.pronunciation
-                                                    .capitalize(),
-                                                style: const TextStyle(
-                                                    fontSize: 22),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                  ],
-                                ),
-                              ),
+                              WordDetailCard(word: success.word),
+                              WordListen(word: widget.words[current]),
                               const SizedBox(
                                 height: 22,
                               ),
                               if (success.word.definitions.isNotEmpty)
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      'Meanings',
-                                      style: TextStyle(fontSize: 22),
-                                    ),
-                                    const SizedBox(
-                                      height: 22,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: List.generate(
-                                        success.word.definitions.length,
-                                        (index) => Column(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 8.0),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            right: 8),
-                                                    height: 8,
-                                                    width: 8,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.teal[300],
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Text(
-                                                      success.word
-                                                          .definitions[index]
-                                                          .capitalize(),
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      style: const TextStyle(
-                                                          fontSize: 16),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const Divider(
-                                              color: Colors.white,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                WordMeanings(word: success.word),
                             ],
                           ),
                         ),

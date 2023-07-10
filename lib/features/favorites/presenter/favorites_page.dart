@@ -50,43 +50,45 @@ class _FavoritesListPageState extends State<FavoritesListPage> {
                     ),
                   ),
                 ),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  direction: Axis.horizontal,
-                  children: (state.runtimeType == FavoritesSuccessState)
-                      ? (state as FavoritesSuccessState)
-                              .favoritesList
-                              .isNotEmpty
-                          ? List.generate(
-                              state.favoritesList.length,
-                              (index) => WordCard(
-                                (state).favoritesList[index].word,
-                                onPressed: () {
-                                  Modular.to.pushNamed(
-                                    '/word-details',
-                                    arguments: [
-                                      List.generate(
-                                          state.favoritesList.length,
-                                          (index) =>
-                                              state.favoritesList[index].word),
-                                      index
-                                    ],
-                                  ).then((value) => cubit.initialize());
-                                },
-                              ),
-                            )
-                          : <Widget>[
-                              Column(
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/images/no_data.svg',
-                                    width: 120,
-                                  ),
-                                  const Text('Sem dados'),
-                                ],
+                Center(
+                  child: Wrap(
+                    alignment: WrapAlignment.start,
+                    direction: Axis.horizontal,
+                    children: (state.runtimeType == FavoritesSuccessState)
+                        ? (state as FavoritesSuccessState)
+                                .favoritesList
+                                .isNotEmpty
+                            ? List.generate(
+                                state.favoritesList.length,
+                                (index) => WordCard(
+                                  (state).favoritesList[index].word,
+                                  onPressed: () {
+                                    Modular.to.pushNamed(
+                                      '/word-details',
+                                      arguments: [
+                                        List.generate(
+                                            state.favoritesList.length,
+                                            (index) => state
+                                                .favoritesList[index].word),
+                                        index
+                                      ],
+                                    ).then((value) => cubit.initialize());
+                                  },
+                                ),
                               )
-                            ]
-                      : <Widget>[],
+                            : <Widget>[
+                                Column(
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/no_data.svg',
+                                      width: 120,
+                                    ),
+                                    const Text('Sem dados'),
+                                  ],
+                                )
+                              ]
+                        : <Widget>[],
+                  ),
                 ),
               ],
             );
