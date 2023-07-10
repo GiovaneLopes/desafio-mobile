@@ -29,9 +29,17 @@ class GetWordDetailsRepositoryImp implements GetWordDetailsRepository {
   @override
   Future<Either<Exception, void>> setFavoriteWord(Word word) async {
     try {
-      await localDatasource.setFavoriteWord(
-          WordModel.fromEntity(word).copyWith(isFavorited: true));
-      return const Right(null);
+      final localWord = await localDatasource.getCachedWord(word.word);
+      if (localWord == null) {
+        final response = await remoteDatasource(word.word);
+        await localDatasource.setFavoriteWord(
+            WordModel.fromEntity(response).copyWith(isFavorited: true));
+        return const Right(null);
+      } else {
+        await localDatasource.setFavoriteWord(WordModel.fromEntity(localWord)
+            .copyWith(id: localWord.id, isFavorited: true));
+        return const Right(null);
+      }
     } catch (e) {
       return Left(Exception(e));
     }

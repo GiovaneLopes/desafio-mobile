@@ -14,6 +14,7 @@ void main() {
   final repository = FavoritesRepositoryImp(datasource);
   final List<WordModel> words = [
     WordModel(
+        id: null,
         word: 'word',
         definitions: [],
         pronunciation: '',

@@ -55,14 +55,23 @@ class _WordsListPageState extends State<WordsListPage> {
             return ListView(
               controller: scrollController,
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text(
-                    'Words list',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Words list',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => cubit.signOut(),
+                        icon: const Icon(Icons.logout),
+                      ),
+                    ],
                   ),
                 ),
                 Center(

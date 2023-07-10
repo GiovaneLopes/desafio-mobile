@@ -8,11 +8,13 @@ void main() {
   final datasource = MockLocalWordsDatasource();
   String wordText = 'door';
   final WordModel wordModel = WordModel(
-      word: wordText,
-      definitions: [],
-      pronunciation: '',
-      frequency: 1.0,
-      isFavorited: false);
+    id:null,
+    word: wordText,
+    definitions: [],
+    pronunciation: '',
+    frequency: 1.0,
+    isFavorited: false,
+  );
 
   test('Should return a WordModel', () async {
     when(datasource.getCachedWord(wordText))

@@ -10,6 +10,7 @@ void main() {
   final datasource = MockWordsApiRemoteDatasource();
   String wordText = 'door';
   final WordModel wordModel = WordModel(
+      id: null,
       word: 'word',
       definitions: [],
       pronunciation: '',

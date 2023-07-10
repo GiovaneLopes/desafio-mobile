@@ -1,9 +1,12 @@
+import 'package:app_dictionary/features/auth/domain/usecases/sign_out.dart';
 import 'package:app_dictionary/features/words_list/domain/usecases/get_words_list.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WordsListCubit extends Cubit<WordsListState> {
   final GetWordsListUsecase getWordsListUsecase;
-  WordsListCubit(this.getWordsListUsecase) : super(WordsListLoadingState());
+  final SignOutUsecase signOutUsecase;
+  WordsListCubit(this.getWordsListUsecase, this.signOutUsecase)
+      : super(WordsListLoadingState());
 
   List<String> cachedWords = [];
 
@@ -14,6 +17,10 @@ class WordsListCubit extends Cubit<WordsListState> {
       cachedWords.addAll(wordsList);
       emit(WordsListSuccessState(cachedWords));
     });
+  }
+
+  void signOut() async {
+    await signOutUsecase();
   }
 }
 

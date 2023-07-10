@@ -1,8 +1,11 @@
 import 'dart:convert';
 
-import 'package:app_dictionary/core/datasources/local_words_datasource/constants/words_api_constants.dart';
+import 'package:app_dictionary/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:app_dictionary/features/auth/data/datasources/constants/firebase_keys.dart';
+import 'package:app_dictionary/features/auth/data/erros/auth_failures.dart';
 import 'package:app_dictionary/features/word_details/data/models/word_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 abstract class LocalWordsDatasource {
   Future<void> cacheWord(WordModel word);
@@ -13,17 +16,19 @@ abstract class LocalWordsDatasource {
 }
 
 class LocalWordsDatasourceImp implements LocalWordsDatasource {
-  final Future<SharedPreferences> _preferences =
-      SharedPreferences.getInstance();
-  LocalWordsDatasourceImp();
+  late final FirebaseDatabase database;
+  final AuthLocalDatasource authLocalDatasource;
+  LocalWordsDatasourceImp(this.authLocalDatasource) {
+    database = FirebaseDatabase.instance;
+  }
 
   @override
   Future<void> cacheWord(WordModel word) async {
-    final SharedPreferences prefs = await _preferences;
-    List<WordModel> words = await _getCachedWordList();
-    words.add(word);
-    await prefs.setString(
-        WordsLocalConstants.localWordsList, jsonEncode(words));
+    final localUser = await authLocalDatasource.getUser();
+    DatabaseReference userReference =
+        database.ref().child('Words').child(localUser!.id!);
+    final newWordReference = userReference.push();
+    newWordReference.set(word.toMap());
   }
 
   @override
@@ -58,34 +63,35 @@ class LocalWordsDatasourceImp implements LocalWordsDatasource {
 
   @override
   Future<void> setFavoriteWord(WordModel word) async {
-    final SharedPreferences prefs = await _preferences;
-    List<WordModel> words = await _getCachedWordList();
-    for (int i = 0; i < words.length; i++) {
-      if (words[i].word == word.word) {
-        words[i] = word;
-      }
-    }
-    await prefs.setString(
-        WordsLocalConstants.localWordsList, jsonEncode(words));
+    final localUser = await authLocalDatasource.getUser();
+    DatabaseReference userReference =
+        database.ref().child('Words').child(localUser!.id!).child(word.id!);
+    await userReference.update(word.toMap());
   }
 
   Future<List<WordModel>> _getCachedWordList() async {
-    final SharedPreferences prefs = await _preferences;
-    final String? jsonList =
-        prefs.getString(WordsLocalConstants.localWordsList);
-    if (jsonList == null) {
-      return <WordModel>[];
-    } else {
-      final map = jsonDecode(jsonList);
-      List<WordModel> words = [];
-      map.map((wordItem) {
-        if (wordItem is String) {
-          words.add(WordModel.fromCache(jsonDecode(wordItem)));
-        } else if (wordItem is Map<String, dynamic>) {
-          words.add(WordModel.fromCache(wordItem));
-        }
-      }).toList();
-      return words;
+    try {
+      final localUser = await authLocalDatasource.getUser();
+      DatabaseReference wordsReference =
+          database.ref().child('Words').child(localUser!.id!);
+      final response = await wordsReference.get();
+      List<WordModel> list = [];
+      if (response.value != null) {
+        final map = response.value as Map;
+        map.forEach((key, value) {
+          final word = WordModel.fromCache(jsonDecode(jsonEncode(value)));
+          list.add(word.copyWith(id: key));
+        });
+      }
+      return list;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == FirebaseKeys.emailAlreadyInUseErrorMessage) {
+        throw UserAlreadyInUse();
+      } else {
+        rethrow;
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }
