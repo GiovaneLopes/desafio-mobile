@@ -1,1 +1,1 @@
-app/* linguist-documentation=false
+*.dart linguist-language=Dart
